@@ -1,0 +1,24 @@
+image: sedexconnect/continuous-integration:latest
+
+options:
+  max-time: 30
+  size: 2x
+
+definitions:
+  steps:
+    - step: &fossa
+        name: "Run FOSSA analysis"
+        image: 
+          name: "sedexconnect/continuous-integration:latest"
+          username: "$__DOCKERHUB_USERNAME"
+          password: "$__DOCKERHUB_PASSWORD"
+        script:
+          - scripts/fossa.sh
+
+pipelines:
+  default:
+    - step: *fossa
+
+  branches:
+    main:
+    - step: *fossa
