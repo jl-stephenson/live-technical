@@ -14,11 +14,10 @@ const squareStyle = {
 
 const boardStyle = {
   backgroundColor: "#eee",
-  width: "200px",
   alignItems: "center",
   justifyContent: "center",
-  display: "flex",
-  flexWrap: "wrap",
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
   border: "3px #eee solid",
 };
 
@@ -76,8 +75,8 @@ const Board = ({
           {gameOver && !winner
             ? "Game Over"
             : winner
-              ? "Winner: " + winner
-              : ""}
+            ? "Winner: " + winner
+            : ""}
         </span>
       </div>
       <button style={buttonStyle} onClick={handleReset}>
@@ -121,9 +120,25 @@ const App = () => {
 
   let getWinner = () => {};
 
-  let squareClicked = () => {};
+  let squareClicked = (clickedSquare) => {
+    if (board[clickedSquare] !== null) return;
 
-  let resetGame = () => {};
+    const mark = isXnext ? "X" : "O";
+    const updatedBoard = board.map((square, index) => {
+      return index === clickedSquare ? mark : square;
+    });
+
+    setBoard(updatedBoard);
+    const isEmptySquares = updatedBoard.some((square) => square === null);
+    if (!isEmptySquares) setIsGameOver(true);
+    setIsXnext((isXnext) => !isXnext);
+  };
+
+  let resetGame = () => {
+    setBoard(initialState.board);
+    setIsXnext(initialState.isXnext);
+    setIsGameOver(initialState.isGameOver);
+  };
 
   return (
     <div className="game">
