@@ -118,14 +118,24 @@ const App = () => {
   const [isXnext, setIsXnext] = useState(initialState.isXnext);
   const [isGameOver, setIsGameOver] = useState(initialState.isGameOver);
 
-  let getWinner = () => {};
+  let getWinner = () => {
+    const markJustPlaced = isXnext ? "O" : "X";
 
-  let squareClicked = (clickedSquare) => {
-    if (board[clickedSquare] !== null) return;
+    const results = winningCombinations.map((set) => {
+      return set.every((index) => board[index] === markJustPlaced);
+    });
+
+    const isWinner = results.includes(true);
+
+    return isWinner ? markJustPlaced : "";
+  };
+
+  let squareClicked = (squareId) => {
+    if (board[squareId] !== null || getWinner() === "X" || getWinner() === "O") return;
 
     const mark = isXnext ? "X" : "O";
     const updatedBoard = board.map((square, index) => {
-      return index === clickedSquare ? mark : square;
+      return index === squareId ? mark : square;
     });
 
     setBoard(updatedBoard);
