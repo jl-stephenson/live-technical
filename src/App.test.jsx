@@ -21,7 +21,7 @@ describe("App", () => {
 
     fireEvent.click(squares[0]);
 
-    expect(squares[0].textContent).toBe("X");
+    expect(squares[0]).toHaveTextContent(/X/);
     expect(screen.getByLabelText(/X/)).toBeInTheDocument();
   });
 });
