@@ -8,9 +8,20 @@ describe("App", () => {
     render(<App />);
 
     expect(screen.getByText("Next Player: X")).toBeInTheDocument();
-    expect(screen.getByRole("button", {name: /Reset/})).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Reset/ })).toBeInTheDocument();
 
     const squares = screen.getAllByLabelText(/Empty/);
     expect(squares.length).toBe(9);
+  });
+
+  it("places an X correctly on first click", () => {
+    render(<App />);
+
+    const squares = screen.getAllByLabelText(/Empty/);
+
+    fireEvent.click(squares[0]);
+
+    expect(squares[0].textContent).toBe("X");
+    expect(screen.getByLabelText(/X/)).toBeInTheDocument();
   });
 });
