@@ -45,13 +45,14 @@ const buttonStyle = {
 
 const Square = ({ playerMark, squareId, handleSquareClick }) => {
   return (
-    <div
+    <button
       className="square"
       style={squareStyle}
+      aria-label={playerMark === null ? "Empty" : playerMark}
       onClick={() => handleSquareClick(squareId)}
     >
       {playerMark}
-    </div>
+    </button>
   );
 };
 
@@ -64,7 +65,7 @@ const Board = ({
   handleReset,
 }) => {
   return (
-    <div style={containerStyle} className="gameBoard">
+    <main style={containerStyle} className="gameBoard">
       <div id="statusArea" className="status" style={instructionsStyle}>
         <span>
           {!gameOver && !winner ? "Next Player: " + (isXnext ? "X" : "O") : ""}
@@ -92,7 +93,7 @@ const Board = ({
           />
         ))}
       </div>
-    </div>
+    </main>
   );
 };
 
