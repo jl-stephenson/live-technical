@@ -45,13 +45,13 @@ const buttonStyle = {
 
 const Square = ({ playerMark, squareId, handleSquareClick }) => {
   return (
-    <div
+    <button
       className="square"
       style={squareStyle}
       onClick={() => handleSquareClick(squareId)}
     >
       {playerMark}
-    </div>
+    </button>
   );
 };
 
