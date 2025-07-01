@@ -29,6 +29,7 @@ describe("App", () => {
     fireEvent.click(squares[0]);
 
     expect(squares[0]).toHaveTextContent(/X/);
+    expect(squares[0]).toBeDisabled();
 
     fireEvent.click(squares[0]);
 
