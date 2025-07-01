@@ -4,21 +4,21 @@ import "@testing-library/jest-dom";
 import App from "./App";
 
 describe("App", () => {
-  it("renders correctly", () => {
-    render(<App />);
+  let squares;
 
+  beforeEach(() => {
+    render(<App />);
+    squares = screen.getAllByLabelText(/Empty/i);
+  });
+
+  it("renders correctly", () => {
     expect(screen.getByText(/Next Player: X/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Reset/i })).toBeInTheDocument();
 
-    const squares = screen.getAllByLabelText(/Empty/i);
     expect(squares.length).toBe(9);
   });
 
   it("places an X correctly on first click", () => {
-    render(<App />);
-
-    const squares = screen.getAllByLabelText(/Empty/i);
-
     fireEvent.click(squares[0]);
 
     expect(squares[0]).toHaveTextContent(/X/);
@@ -27,9 +27,6 @@ describe("App", () => {
   });
 
   it("correctly identifies player X win", () => {
-    render(<App />);
-
-    const squares = screen.getAllByLabelText(/Empty/i);
     [0, 3, 1, 4, 2].forEach((index) => {
       fireEvent.click(squares[index]);
     });
