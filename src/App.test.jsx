@@ -7,7 +7,7 @@ describe("App", () => {
   it("renders correctly", () => {
     render(<App />);
 
-    expect(screen.getByText("Next Player: X")).toBeInTheDocument();
+    expect(screen.getByText(/Next Player: X/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Reset/i })).toBeInTheDocument();
 
     const squares = screen.getAllByLabelText(/Empty/i);
@@ -33,6 +33,10 @@ describe("App", () => {
     [0, 3, 1, 4, 2].forEach((index) => {
       fireEvent.click(squares[index]);
     });
+
+    expect(screen.getByText(/Winner: X/i)).toBeInTheDocument();
+
+    fireEvent.click(squares[5]);
 
     expect(screen.getByText(/Winner: X/i)).toBeInTheDocument();
   });
