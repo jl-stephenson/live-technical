@@ -122,11 +122,9 @@ const App = () => {
   let getWinner = () => {
     const markJustPlaced = isXnext ? "O" : "X";
 
-    const results = winningCombinations.map((set) => {
+    const isWinner = winningCombinations.some((set) => {
       return set.every((index) => board[index] === markJustPlaced);
     });
-
-    const isWinner = results.includes(true);
 
     return isWinner ? markJustPlaced : null;
   };
