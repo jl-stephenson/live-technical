@@ -8,7 +8,7 @@ describe("App", () => {
 
   beforeEach(() => {
     render(<App />);
-    squares = screen.getAllByLabelText(/Empty/i);
+    squares = screen.getAllByRole("button", { name: /Empty/i });
   });
 
   it("renders correctly", () => {
@@ -36,7 +36,7 @@ describe("App", () => {
     expect(squares[0]).toHaveTextContent(/X/);
   });
 
-  it("correctly identifies player X win", () => {
+  it("correctly handles player X win", () => {
     const xWinSequence = [0, 3, 1, 4, 2];
 
     xWinSequence.forEach((index) => {
@@ -49,9 +49,13 @@ describe("App", () => {
 
     expect(squares[5]).toHaveAccessibleName(/Empty/i);
     expect(screen.getByText(/Winner: X/i)).toBeInTheDocument();
+
+    squares.forEach((square) => {
+      expect(square).toBeDisabled();
+    });
   });
 
-  it("correctly identifies draw", () => {
+  it("correctly handles draw", () => {
     const drawSequence = [0, 1, 2, 3, 5, 4, 6, 8, 7];
 
     drawSequence.forEach((index) => {
@@ -59,6 +63,10 @@ describe("App", () => {
     });
 
     expect(screen.getByText(/Game Over/i)).toBeInTheDocument();
+
+    squares.forEach((square) => {
+      expect(square).toBeDisabled();
+    });
   });
 
   it("correctly resets the board", () => {
@@ -70,6 +78,6 @@ describe("App", () => {
 
     fireEvent.click(resetButton);
 
-    expect(screen.getAllByLabelText(/Empty/i)).toHaveLength(9);
+    expect(screen.getAllByRole("button", { name: /Empty/i })).toHaveLength(9);
   });
 });
