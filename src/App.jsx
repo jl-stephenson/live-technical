@@ -43,12 +43,15 @@ const buttonStyle = {
   fontSize: "16px",
 };
 
-const Square = ({ playerMark, squareId, handleSquareClick }) => {
+const Square = ({ playerMark, squareId, handleSquareClick, gameOver }) => {
   return (
     <button
       className="square"
       style={squareStyle}
-      aria-label={playerMark === null ? "Empty" : playerMark}
+      disabled={playerMark !== null || gameOver}
+      aria-label={`Square ${squareId + 1}: ${
+        playerMark === null ? "Empty" : playerMark
+      }`}
       onClick={() => handleSquareClick(squareId)}
     >
       {playerMark}
@@ -90,6 +93,7 @@ const Board = ({
             squareId={idx}
             playerMark={playerMark}
             handleSquareClick={handleSquareClick}
+            gameOver={gameOver || winner}
           />
         ))}
       </div>
@@ -122,17 +126,15 @@ const App = () => {
   let getWinner = () => {
     const markJustPlaced = isXnext ? "O" : "X";
 
-    const results = winningCombinations.map((set) => {
+    const isWinner = winningCombinations.some((set) => {
       return set.every((index) => board[index] === markJustPlaced);
     });
 
-    const isWinner = results.includes(true);
-
-    return isWinner ? markJustPlaced : "";
+    return isWinner ? markJustPlaced : null;
   };
 
   let squareClicked = (squareId) => {
-    if (board[squareId] !== null || getWinner() === "X" || getWinner() === "O") return;
+    if (getWinner()) return;
 
     const mark = isXnext ? "X" : "O";
     const updatedBoard = board.map((square, index) => {
