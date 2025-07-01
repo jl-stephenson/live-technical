@@ -133,7 +133,7 @@ const App = () => {
   };
 
   let squareClicked = (squareId) => {
-    if (board[squareId] !== null || getWinner()) return;
+    if (getWinner()) return;
 
     const mark = isXnext ? "X" : "O";
     const updatedBoard = board.map((square, index) => {
