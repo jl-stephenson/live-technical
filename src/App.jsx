@@ -43,12 +43,12 @@ const buttonStyle = {
   fontSize: "16px",
 };
 
-const Square = ({ playerMark, squareId, handleSquareClick }) => {
+const Square = ({ playerMark, squareId, handleSquareClick, gameOver }) => {
   return (
     <button
       className="square"
       style={squareStyle}
-      disabled={playerMark !== null}
+      disabled={playerMark !== null || gameOver}
       aria-label={`Square ${squareId + 1}: ${
         playerMark === null ? "Empty" : playerMark
       }`}
@@ -93,6 +93,7 @@ const Board = ({
             squareId={idx}
             playerMark={playerMark}
             handleSquareClick={handleSquareClick}
+            gameOver={gameOver || winner}
           />
         ))}
       </div>
