@@ -48,7 +48,7 @@ const Square = ({ playerMark, squareId, handleSquareClick }) => {
     <button
       className="square"
       style={squareStyle}
-      aria-label={playerMark === null ? "Empty" : playerMark}
+      aria-label={`Square ${squareId + 1}: ${playerMark === null ? "Empty" : playerMark}`}
       onClick={() => handleSquareClick(squareId)}
     >
       {playerMark}

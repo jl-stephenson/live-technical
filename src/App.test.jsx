@@ -46,6 +46,7 @@ describe("App", () => {
 
     fireEvent.click(squares[5]);
 
+    expect(squares[5]).toHaveAccessibleName(/Empty/i);
     expect(screen.getByText(/Winner: X/i)).toBeInTheDocument();
   });
 
