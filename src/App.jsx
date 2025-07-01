@@ -128,11 +128,11 @@ const App = () => {
 
     const isWinner = results.includes(true);
 
-    return isWinner ? markJustPlaced : "";
+    return isWinner ? markJustPlaced : null;
   };
 
   let squareClicked = (squareId) => {
-    if (board[squareId] !== null || getWinner() === "X" || getWinner() === "O") return;
+    if (board[squareId] !== null || getWinner()) return;
 
     const mark = isXnext ? "X" : "O";
     const updatedBoard = board.map((square, index) => {
